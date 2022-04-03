@@ -1,7 +1,15 @@
 <?php 
 $conn = mysqli_connect("localhost","root","","asignment");
+$checkPassMatch = false;
+$checkPass2 = false;
+$checkPass3 = false;
+$checkPass4 = false;
 function register($data){
     global $conn;
+    global $checkPassMatch;
+    global $checkPass2;
+    global $checkPass3;
+    global $checkPass4;
     $name = $data["name"];
     $username = strtolower(stripslashes($data["username"]));
     $password = mysqli_real_escape_string($conn, $data["password"]);
@@ -14,16 +22,17 @@ function register($data){
     } 
 
     if ($password !== $password2){
-            echo "<script>alert('Password not match');</script>";
+        
+        $checkPassMatch = true;
         return false;
     } else if (strlen(trim($password)) < 5 && !preg_match("/[A-Z]/", $password)){
-        echo"<script>alert('Password minimum 5 characters and minimum 1 uppercase')</script>";
-        return false;  
+        $checkPass2 = true;
+        return false;
     } else if (!preg_match("/[A-Z]/", $password)){
-        echo"<script>alert('Password minimum 1 uppercase')</script>";
+        $checkPass3 = true;
         return false;
     } else if (strlen(trim($password)) < 5){
-        echo"<script>alert('Password minimum 5 characters</script>";
+        $checkPass4 = true;
         return false;
     } else {
     $password = password_hash($password, PASSWORD_DEFAULT);
