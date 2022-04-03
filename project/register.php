@@ -2,7 +2,8 @@
 require 'functions.php';
 if( isset($_POST["register"]) ){
     if( register($_POST) > 0){
-        echo "<script>alert('You are member now!');</script>";
+      echo "<script>alert('You are member now!');</script>";
+      echo '<script>window.location.href = "login.php"</script>';
     } else {
         echo mysqli_error($conn);
     }
@@ -36,6 +37,9 @@ if( isset($_POST["register"]) ){
                <span class="show"></span>
                <label>Confirm Password</label>
             </div>
+            <?php if($checkUsername) : ?>
+               <p style="color: red; font-style: italic;">Username already taken !</p>
+               <?php endif; ?>
             <?php if($checkPassMatch) : ?>
                <p style="color: red; font-style: italic;">Password not match !</p>
                <?php endif; ?>
