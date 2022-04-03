@@ -36,7 +36,18 @@ if( isset($_POST["register"]) ){
                <span class="show"></span>
                <label>Confirm Password</label>
             </div>
-
+            <?php if($checkPassMatch) : ?>
+               <p style="color: red; font-style: italic;">Password not match !</p>
+               <?php endif; ?>
+            <?php if($checkPass2) : ?>
+               <p style="color: red; font-style: italic;">Minimum 5 characters and 1 uppercase</p>
+               <?php endif; ?>
+            <?php if($checkPass3) : ?>
+               <p style="color: red; font-style: italic;">Minimum 1 uppercase</p>
+               <?php endif; ?>
+            <?php if($checkPass4) : ?>
+               <p style="color: red; font-style: italic;">Minimum 5 characters</p>
+               <?php endif; ?>
             <div class="button">
                <div class="inner"></div>
                <button type="submit" name="register" id="register">CREATE ACCOUNT</button>
