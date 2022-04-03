@@ -1,11 +1,14 @@
 <?php 
 $conn = mysqli_connect("localhost","root","","asignment");
+$checkUsername = false;
 $checkPassMatch = false;
 $checkPass2 = false;
 $checkPass3 = false;
 $checkPass4 = false;
+$succes = false;
 function register($data){
     global $conn;
+    global $checkUsername;
     global $checkPassMatch;
     global $checkPass2;
     global $checkPass3;
@@ -17,10 +20,9 @@ function register($data){
 
     $result = mysqli_query($conn, "SELECT username FROM users WHERE username = '$username'");
     if(mysqli_fetch_assoc($result)){
-        echo "<script> alert('Username already taken!') </script>";
+        $checkUsername = true;
         return false;
     } 
-
     if ($password !== $password2){
         
         $checkPassMatch = true;
@@ -37,7 +39,9 @@ function register($data){
     } else {
     $password = password_hash($password, PASSWORD_DEFAULT);
     mysqli_query($conn, "INSERT INTO users VALUES('','$name', '$username', '$password')");
-    return mysqli_affected_rows($conn);}    
+    return mysqli_affected_rows($conn);
+    }   
+    
 }
 
 function query($query){
