@@ -10,16 +10,17 @@ if( isset($_POST["login"]) ){
     $username = $_POST["username"];
     $password = $_POST["password"];
     $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
+    while ($row = mysqli_fetch_assoc($result)){
     if (mysqli_num_rows($result) === 1 ){    
-        $row = mysqli_fetch_assoc($result);
         if( password_verify($password, $row["password"]) ){
-
+         $_SESSION["username"] = $row["username"];
          $_SESSION["login"] = true;
             header("Location: centerPage.php");
             exit;
         }
     }
     $error = true;
+   }
 }
 ?>
 <!DOCTYPE html>
